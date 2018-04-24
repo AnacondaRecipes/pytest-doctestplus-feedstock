@@ -20,11 +20,10 @@ requirements:
   host:
     - python
     - pip
-    - pytest >=2.8
-    - six
   run:
     - python
     - pytest >=2.8
+    - numpy >=1.10
     - six
 
 test:
