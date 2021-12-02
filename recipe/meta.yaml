@@ -15,10 +15,12 @@ build:
   noarch: python
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps -vv
+  entry_points:
+    - pytest_doctestplus = pytest_doctestplus.plugin
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - setuptools >=30.3.0
     - setuptools_scm
@@ -33,6 +35,7 @@ test:
     - pytest_doctestplus
   requires:
     - pip
+    - python <3.10
   commands:
     - pip check
 
