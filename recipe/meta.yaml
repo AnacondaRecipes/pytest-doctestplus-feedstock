@@ -19,14 +19,15 @@ requirements:
   host:
     - python
     - pip
-    - setuptools >=30.3.0
+    - setuptools
     - setuptools_scm
     - wheel
   run:
-    - python >=3.7
+    - python
     - pytest >=4.6
     - setuptools >=30.3.0
-    - packaging >=17.0
+    - sphinx
+
 test:
   imports:
     - pytest_doctestplus
