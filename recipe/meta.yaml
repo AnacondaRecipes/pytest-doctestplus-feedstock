@@ -29,13 +29,16 @@ requirements:
     - sphinx
 
 test:
+  source_files:
+    - tests/
   imports:
     - pytest_doctestplus
   requires:
     - pip
-    - python <3.10
+    - pytest
   commands:
     - pip check
+    - pytest tests -vv
 
 about:
   home: https://github.com/astropy/pytest-doctestplus
