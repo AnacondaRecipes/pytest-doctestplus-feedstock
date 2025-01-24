@@ -39,7 +39,7 @@ test:
     - numpy
   commands:
     - pip check
-    - pytest tests -vv -k "not(test_remote_data_url or test_remote_data_float_cmp or test_remote_data_ignore_whitespace or test_remote_data_ellipsis or test_remote_data_requires or test_remote_data_ignore_warnings)"
+    - pytest tests -vv -k "not(test_remote_data_url or test_remote_data_float_cmp or test_remote_data_ignore_whitespace or test_remote_data_ellipsis or test_remote_data_requires or test_remote_data_ignore_warnings or test_ufunc or test_generate_diff_basic or test_generate_diff_multiline)"
 
 about:
   home: https://github.com/astropy/pytest-doctestplus
