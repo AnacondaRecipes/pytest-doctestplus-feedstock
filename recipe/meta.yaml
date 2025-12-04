@@ -1,31 +1,39 @@
 {% set name = "pytest-doctestplus" %}
-{% set version = "1.3.0" %}
+{% set version = "1.6.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 709ad23ea98da9a835ace0a4365c85371c376e000f2860f30de6df3a6f00728a
+  sha256: f893d68370d19b418d58da0047d36a4feedac7ed28bc236858f484e994f1ac66
 
 build:
-  skip: True  # [py<38]
   number: 0
+  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
-    - python
     - pip
-    - setuptools
+    - python
+    - setuptools >=30.3.0
     - setuptools_scm
     - wheel
   run:
     - python
     - pytest >=4.6
     - packaging >=17.0
+
+{% set deselect_tests = "" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_all" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_url" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_float_cmp" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_ignore_whitespace" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_ellipsis" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_requires" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_doctestplus.py::test_remote_data_ignore_warnings" %}
 
 test:
   source_files:
@@ -35,10 +43,11 @@ test:
   requires:
     - pip
     - pytest
+    - setuptools >=30.3.0
     - numpy
   commands:
     - pip check
-    - pytest tests -vv -k "not(test_remote_data_url or test_remote_data_float_cmp or test_remote_data_ignore_whitespace or test_remote_data_ellipsis or test_remote_data_requires or test_remote_data_ignore_warnings or test_ufunc or test_generate_diff_basic or test_generate_diff_multiline)"
+    - pytest -vv tests {{ deselect_tests }}
 
 about:
   home: https://github.com/astropy/pytest-doctestplus
